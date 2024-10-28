@@ -5,7 +5,7 @@
   import Home from "@/views/Home.svelte";
   import { App } from "konsta/svelte";
 
-  let theme: "material" | "ios" = "ios";
+  let theme: "material" | "ios" = $state("ios");
 </script>
 
 <ModeWatcher track />
@@ -13,7 +13,7 @@
 <Router>
   <App {theme} safeAreas>
     <Route path="/">
-      <Home {theme} on:theme={({ detail }) => (theme = detail)} />
+      <Home {theme} onThemeChange={(detail) => (theme = detail)} />
     </Route>
 
     <Route path="/view">

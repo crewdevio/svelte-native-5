@@ -9,12 +9,14 @@
     Toggle,
   } from "konsta/svelte";
   import { toggleMode, mode } from "mode-watcher";
-  import { createEventDispatcher } from "svelte";
   import { Link } from "svelte-routing";
 
-  export let theme: "ios" | "material";
+  interface Props {
+    theme: "ios" | "material";
+    onThemeChange: (theme: Props["theme"]) => void;
+  }
 
-  const dispatch = createEventDispatcher<{ theme: "ios" | "material" }>();
+  const { theme = $bindable(), onThemeChange }: Props = $props();
 </script>
 
 <Page>
@@ -24,7 +26,7 @@
   <List strong inset>
     <ListItem label title="iOS Theme">
       <Radio
-        onChange={() => dispatch("theme", "ios")}
+        onChange={() => onThemeChange("ios")}
         checked={theme === "ios"}
         component="div"
         slot="media"
@@ -33,7 +35,7 @@
 
     <ListItem label title="Material Theme">
       <Radio
-        onChange={() => dispatch("theme", "material")}
+        onChange={() => onThemeChange("material")}
         checked={theme === "material"}
         component="div"
         slot="media"
